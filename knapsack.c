@@ -36,7 +36,7 @@ int main()
                     
                 }
             }
-            //printf("weight is:",weight[track]);
+            printf("weight is:",weight[track]);
             pfwt[track]=0.0;
             if(rem>weight[track])
             {
