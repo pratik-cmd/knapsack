@@ -1,57 +1,53 @@
+
 #include <stdio.h>
-int main()
+#include <stdlib.h>
+int select(float pfwt[], float n);
+int i,indeex;
+float pf[20],wt[20],pfwt[20],amt=0,m,max,n,rem=0;
+void main()
 {
-        int n,i,track=0;
-        float m,rem=0.0,pfwt[10],profit[10],weight[10],max,amtpf=0;
-        printf("Enter max weight constraint:");
-        scanf("%f",&m);
-        printf("Enter max no of objects:");
-        scanf("%d",&n);
-        printf("Enter the profit:");
-        for(i=0;i<n;i++)
+   
+    printf("Enter the no. of objects:");
+    scanf("%f",&n);
+    printf("Enter the weight constraint:");
+    scanf("%f",&m);
+    printf("Enter the profit and weight:");
+    for(i=0;i<n;i++)
+    {
+        scanf("%f %f",&pf[i],&wt[i]);
+         pfwt[i]=pf[i]/wt[i];
+    }
+    rem=m;   
+    while(rem!=0)
+    {
+        indeex=select(pfwt,n);
+        if(wt[indeex]<=rem)
         {
-            scanf("%f",&profit[i]);
+            amt+=pf[indeex];
+            rem-=wt[indeex];
+            pfwt[indeex]=-1;
         }
-        printf("Enter the weight:");
-        for(i=0;i<n;i++)
+        else
         {
-            scanf("%f",&weight[i]);
+            amt+=rem*pf[indeex]/wt[indeex];
+            rem=0; 
         }
-       
-        for(i=0;i<n;i++)
-        {
-         pfwt[i]=(profit[i]/weight[i]);
-        }
-        
-        rem=m;
-        do
-        {
-            max=pfwt[0];
-            for(i=1;i<n;i++)
-            {
-                if(pfwt[i]>=max)
-                {
-                    max=pfwt[i];
-                    track=i;
-                    
-                }
-            }
-            printf("weight is:",weight[track]);
-            pfwt[track]=0.0;
-            if(rem>weight[track])
-            {
-                amtpf+=profit[track];
-                rem-=weight[track];
-                             
-            }
-            else
-            {
-               
-                amtpf=amtpf+(rem*max);
-                rem=0.0;
-            }
-        }while(rem!=0.0);
+      
+    }
+    printf("Max profit is %f",amt);
 
-        printf("\n\nMAX PROFIT IS %f",amtpf);
-
+}
+int select(float pfwt[], float n)
+{
+    float max=0;
+    int i,indeex=0;
+    for(i=0;i<n;i++ )
+    {
+        if(pfwt[i]>max)
+        {
+            max=pfwt[i];
+            indeex=i;
+        }
+    }
+    return indeex;
 }
